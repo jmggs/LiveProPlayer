@@ -1,6 +1,7 @@
 # Live Pro Player
 
 A desktop audio player oriented to live playback, with playlist control, waveform preview, stereo VU metering, countdown timers, and optional HTTP remote control.
+<img width="640" height="439" alt="{9A20DA1D-49EE-4AB9-BD2E-FC172B86DBA1}" src="https://github.com/user-attachments/assets/0f210646-a1b1-407f-ae2a-48c068b6efe5" />
 
 ## Version
 
