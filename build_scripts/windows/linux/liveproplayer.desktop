@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Live Pro Player
+Comment=Desktop audio player for live playback
+Exec=liveproplayer
+Icon=liveproplayer
+Terminal=false
+Categories=AudioVideo;Audio;Player;
+StartupNotify=true
