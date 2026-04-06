@@ -224,3 +224,50 @@ Then compile the Inno Setup script:
 ```powershell
 iscc /DMyAppVersion=0.4.3 .\build_scripts\windows\liveproplayer.iss
 ```
+
+## Linux Packages (.deb and .AppImage)
+
+This project includes a Linux build pipeline in `build_scripts/linux/` that:
+
+- Builds a standalone app bundle with PyInstaller
+- Generates a `.deb` package with:
+	- launcher in `/usr/bin/liveproplayer`
+	- desktop entry in `/usr/share/applications/liveproplayer.desktop`
+	- icon in `/usr/share/icons/hicolor/256x256/apps/liveproplayer.png`
+- Generates an `.AppImage` with desktop entry and icon integration
+
+### Prerequisites
+
+- Python `3.9+`
+- `python3-pip`
+- `dpkg-deb`
+- `curl`
+
+### Build both artifacts
+
+From the project root:
+
+```bash
+chmod +x ./build_scripts/linux/build_linux.sh
+./build_scripts/linux/build_linux.sh 0.4.3
+```
+
+Generated outputs:
+
+- `dist/linux/liveproplayer_0.4.3_amd64.deb`
+- `dist/linux/LiveProPlayer-0.4.3-x86_64.AppImage`
+
+### Install and test
+
+Install DEB:
+
+```bash
+sudo apt install ./dist/linux/liveproplayer_0.4.3_amd64.deb
+```
+
+Run AppImage:
+
+```bash
+chmod +x ./dist/linux/LiveProPlayer-0.4.3-x86_64.AppImage
+./dist/linux/LiveProPlayer-0.4.3-x86_64.AppImage
+```
