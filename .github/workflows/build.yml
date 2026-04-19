@@ -1,0 +1,114 @@
+name: Build Mobile
+
+on:
+  push:
+    branches: [mobile]
+    tags: ['v*-mobile']
+  pull_request:
+    branches: [mobile]
+
+jobs:
+  android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      - run: flutter build apk --release --split-per-abi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-apks
+          path: build/app/outputs/flutter-apk/*.apk
+          retention-days: 30
+
+  ios:
+    name: Build iOS (unsigned)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      - run: flutter build ios --release --no-codesign
+
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p Payload
+          cp -r build/ios/iphoneos/Runner.app Payload/
+          zip -r LiveProPlayer-${{ github.ref_name }}-unsigned.ipa Payload/
+          rm -rf Payload
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ios-unsigned-ipa
+          path: LiveProPlayer-*-unsigned.ipa
+          retention-days: 30
+
+  release:
+    name: Create Release
+    needs: [android, ios]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: android-apks
+          path: artifacts/android
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: ios-unsigned-ipa
+          path: artifacts/ios
+
+      - name: Rename Android APKs
+        run: |
+          cd artifacts/android
+          for f in *.apk; do
+            mv "$f" "LiveProPlayer-${{ github.ref_name }}-${f#app-}"
+          done
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: "${{ github.ref_name }}"
+          body: |
+            ## Live Pro Player ${{ github.ref_name }}
+
+            ### Android
+            Download the APK for your device architecture:
+            - `arm64-v8a` — most modern Android phones (64-bit)
+            - `armeabi-v7a` — older Android phones (32-bit)
+            - `x86_64` — emulator
+
+            Enable **Install unknown apps** in Android settings and install directly.
+            Requires Android 5.0 (API 21) or higher.
+
+            ### iOS (unsigned)
+            The unsigned `.ipa` can be installed via [AltStore](https://altstore.io) or [Sideloadly](https://sideloadly.io) using a free Apple ID.
+            Re-signing required every 7 days with a free account.
+
+            ### Source Code
+            Full source on the [`mobile`](https://github.com/${{ github.repository }}/tree/mobile) branch.
+          files: |
+            artifacts/android/*.apk
+            artifacts/ios/*.ipa
+          fail_on_unmatched_files: false
