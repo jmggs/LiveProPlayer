@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- App display name -->
+    <key>CFBundleDisplayName</key>
+    <string>Live Pro Player</string>
+
+    <key>CFBundleName</key>
+    <string>live_pro_player</string>
+
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+
+    <key>CFBundleVersion</key>
+    <string>$(FLUTTER_BUILD_NUMBER)</string>
+
+    <key>CFBundleShortVersionString</key>
+    <string>$(FLUTTER_BUILD_NAME)</string>
+
+    <!-- ── Audio permissions ─────────────────────────────────────────────── -->
+
+    <!-- Background audio playback -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>audio</string>
+        <string>fetch</string>
+    </array>
+
+    <!-- ── File access ───────────────────────────────────────────────────── -->
+    <!-- Allow picking files from Files app and iCloud -->
+    <key>NSDocumentPickerUsageDescription</key>
+    <string>Live Pro Player needs access to your audio files to add them to the playlist.</string>
+
+    <!-- Allow access to Music library (optional) -->
+    <key>NSAppleMusicUsageDescription</key>
+    <string>Live Pro Player can play audio files from your library.</string>
+
+    <!-- ── Local network (for HTTP remote control) ───────────────────────── -->
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>Live Pro Player runs a local HTTP server so you can control playback from any device on the same network.</string>
+
+    <key>NSBonjourServices</key>
+    <array>
+        <string>_http._tcp</string>
+    </array>
+
+    <!-- ── UI ────────────────────────────────────────────────────────────── -->
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+
+    <key>UIMainStoryboardFile</key>
+    <string></string>
+
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+
+    <!-- iPad: allow all orientations -->
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+
+    <key>UIStatusBarStyle</key>
+    <string>UIStatusBarStyleLightContent</string>
+
+    <key>CADisableMinimumFrameDurationOnPhone</key>
+    <true/>
+    <key>UIApplicationSupportsIndirectInputEvents</key>
+    <true/>
+</dict>
+</plist>

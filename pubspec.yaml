@@ -1,0 +1,48 @@
+name: live_pro_player
+description: Live performance audio player for iOS and Android
+version: 1.8.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+  flutter: '>=3.16.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # ── Audio ──────────────────────────────────────────────────────────────────
+  just_audio: ^0.9.40          # Playback engine (MP3/WAV/FLAC/AIFF)
+  just_audio_background: ^0.0.1-beta.17  # Background audio + lock screen controls
+  just_waveform: ^0.0.6        # Waveform extraction (native FFmpeg)
+  audio_session: ^0.1.21       # iOS audio session management
+
+  # ── Files & Storage ────────────────────────────────────────────────────────
+  file_picker: ^8.0.7          # File picker (supports audio filters)
+  path_provider: ^2.1.3        # App directories
+  path: ^1.9.0                 # Path utilities
+  shared_preferences: ^2.2.3   # Persistent settings
+
+  # ── HTTP Remote Control ────────────────────────────────────────────────────
+  shelf: ^1.4.1
+  shelf_router: ^1.1.4
+
+  # ── Data ───────────────────────────────────────────────────────────────────
+  xml: ^6.5.0                  # XML playlist save/load
+
+  # ── Permissions ────────────────────────────────────────────────────────────
+  permission_handler: ^11.3.1
+
+  # ── State ──────────────────────────────────────────────────────────────────
+  provider: ^6.1.2
+
+  # ── Misc ───────────────────────────────────────────────────────────────────
+  network_info_plus: ^5.0.3    # Get device IP for remote control display
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.3
+
+flutter:
+  uses-material-design: true
